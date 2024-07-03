@@ -12,5 +12,5 @@ class Contacts(Base):
     full_name = Column(String, index=True)
     email = Column(String, unique=True, index=True)
     phone_number = Column(String, unique=True, index=True)
-    birthday = Column(Date)
+    birthday = Column(String)
 
