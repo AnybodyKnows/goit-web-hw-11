@@ -25,24 +25,23 @@ async def create_contact(body: ContactSchema, db: AsyncSession):
     return contact
 
 
-# async def update_todo(todo_id: int, body: TodoUpdateSchema, db: AsyncSession):
-#     stmt = select(Todo).filter_by(id=todo_id)
-#     result = await db.execute(stmt)
-#     todo = result.scalar_one_or_none()
-#     if todo:
-#         todo.title = body.title
-#         todo.description = body.description
-#         todo.completed = body.completed
-#         await db.commit()
-#         await db.refresh(todo)
-#     return todo
-#
-#
-# async def delete_todo(todo_id: int, db: AsyncSession):
-#     stmt = select(Todo).filter_by(id=todo_id)
-#     todo = await db.execute(stmt)
-#     todo = todo.scalar_one_or_none()
-#     if todo:
-#         await db.delete(todo)
-#         await db.commit()
-#     return todo
+async def update_contact(contact_id: int, body: ContactUpdateSchema, db: AsyncSession):
+    stmt = select(Contacts).filter_by(id=contact_id)
+    result = await db.execute(stmt)
+    contact = result.scalar_one_or_none()
+    if contact:
+        contact.phone_number = body.phone_number
+        contact.birthday = body.birthday
+        await db.commit()
+        await db.refresh(contact)
+    return contact
+
+
+async def delete_contact(contact_id: int, db: AsyncSession):
+    stmt = select(Contacts).filter_by(id=contact_id)
+    contact = await db.execute(stmt)
+    contact = contact.scalar_one_or_none()
+    if contact:
+        await db.delete(contact)
+        await db.commit()
+    return contact

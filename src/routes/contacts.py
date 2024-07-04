@@ -30,15 +30,15 @@ async def create_contact(body: ContactSchema, db: AsyncSession = Depends(get_db)
     return contact
 
 
-# @router.put("/{contact_id}")
-# async def update_contact(body: TodoUpdateSchema, todo_id: int = Path(ge=1), db: AsyncSession = Depends(get_db)):
-#     todo = await repositories_todos.update_todo(todo_id, body, db)
-#     if todo is None:
-#         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="NOT FOUND")
-#     return todo
-#
-#
-# @router.delete("/{contact_id}", status_code=status.HTTP_204_NO_CONTENT)
-# async def delete_contact(todo_id: int = Path(ge=1), db: AsyncSession = Depends(get_db)):
-#     todo = await repositories_todos.delete_todo(todo_id, db)
-#     return todo
+@router.put("/{contact_id}")
+async def update_contact1(body: ContactUpdateSchema, contact_id: int = Path(ge=1), db: AsyncSession = Depends(get_db)):
+    contact = await repository_contents.update_contact(contact_id, body, db)
+    if contact is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="NOT FOUND")
+    return contact
+
+
+@router.delete("/{contact_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_contact(contact_id: int = Path(ge=1), db: AsyncSession = Depends(get_db)):
+    contact = await repository_contents.delete_contact(contact_id, db)
+    return contact
